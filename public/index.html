@@ -5,349 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Interviewer</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html, body {
-            width: 100%;
-            height: 100%;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-            background: #0f172a;
-            color: #f1f5f9;
-        }
-
-        #root {
-            width: 100%;
-            height: 100%;
-        }
-
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-            background: #0f172a;
-        }
-
-        .card {
-            background: #1e293b;
-            border-radius: 12px;
-            padding: 40px;
-            max-width: 600px;
-            width: 100%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-
-        .title {
-            font-size: 32px;
-            font-weight: bold;
-            color: #3b82f6;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-
-        .subtitle {
-            font-size: 14px;
-            color: #94a3b8;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .section-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #f1f5f9;
-            margin-bottom: 15px;
-        }
-
-        .text {
-            font-size: 14px;
-            color: #cbd5e1;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-
-        .list {
-            margin-left: 20px;
-            margin-bottom: 20px;
-            color: #cbd5e1;
-            font-size: 14px;
-            line-height: 1.8;
-        }
-
-        .button {
-            background: #3b82f6;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 20px;
-            width: 100%;
-            transition: background 0.3s;
-        }
-
-        .button:hover {
-            background: #2563eb;
-        }
-
-        .button:disabled {
-            background: #64748b;
-            cursor: not-allowed;
-        }
-
-        .record-button {
-            background: #3b82f6;
-            color: white;
-            border: none;
-            padding: 16px 32px;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            flex: 1;
-        }
-
-        .stop-button {
-            background: #ef4444;
-            color: white;
-            border: none;
-            padding: 16px 32px;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            flex: 1;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .transcript-box {
-            background: #0f172a;
-            border: 1px solid #334155;
-            border-radius: 8px;
-            padding: 20px;
-            min-height: 120px;
-            color: #e2e8f0;
-            margin-bottom: 20px;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        .question-title {
-            font-size: 20px;
-            font-weight: 600;
-            color: #f1f5f9;
-            margin-bottom: 30px;
-        }
-
-        .progress-bar {
-            height: 4px;
-            background: #334155;
-            border-radius: 2px;
-            overflow: hidden;
-            margin-bottom: 10px;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: #3b82f6;
-            transition: width 0.3s;
-        }
-
-        .progress-text {
-            font-size: 12px;
-            color: #94a3b8;
-            margin-bottom: 20px;
-        }
-
-        .score-card {
-            background: #0f172a;
-            border: 2px solid #3b82f6;
-            border-radius: 12px;
-            padding: 30px;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .large-score {
-            font-size: 72px;
-            font-weight: bold;
-            color: #3b82f6;
-            margin: 20px 0;
-        }
-
-        .score-interpretation {
-            font-size: 16px;
-            color: #cbd5e1;
-        }
-
-        .category-scores {
-            margin-bottom: 30px;
-        }
-
-        .category-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-            font-size: 14px;
-        }
-
-        .category-label {
-            min-width: 150px;
-            color: #cbd5e1;
-        }
-
-        .category-progress-bar {
-            flex: 1;
-            height: 8px;
-            background: #334155;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .category-progress-fill {
-            height: 100%;
-            transition: width 0.3s;
-        }
-
-        .category-score {
-            min-width: 40px;
-            text-align: right;
-            font-weight: 600;
-            color: #f1f5f9;
-        }
-
-        .finish-prompt {
-            background: #f59e0b;
-            color: white;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 20px;
-        }
-
-        .submit-button {
-            background: #10b981;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 10px;
-            width: 100%;
-            font-weight: 600;
-        }
-
-        .continue-button {
-            background: #64748b;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 10px;
-            width: 100%;
-        }
-
-        .processing-text {
-            color: #3b82f6;
-            text-align: center;
-            margin-top: 20px;
-            font-size: 14px;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { width: 100%; height: 100%; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif; background: #0f172a; color: #f1f5f9; }
+        #root { width: 100%; height: 100%; }
+        .container { display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; background: #0f172a; }
+        .card { background: #1e293b; border-radius: 12px; padding: 40px; max-width: 600px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+        .title { font-size: 32px; font-weight: bold; color: #3b82f6; margin-bottom: 10px; text-align: center; }
+        .subtitle { font-size: 14px; color: #94a3b8; text-align: center; margin-bottom: 30px; }
+        .section-title { font-size: 18px; font-weight: 600; color: #f1f5f9; margin-bottom: 15px; }
+        .text { font-size: 14px; color: #cbd5e1; line-height: 1.6; margin-bottom: 15px; }
+        .list { margin-left: 20px; margin-bottom: 20px; color: #cbd5e1; font-size: 14px; line-height: 1.8; }
+        .button { background: #3b82f6; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 20px; width: 100%; }
+        .button:hover { background: #2563eb; }
+        .record-button { background: #3b82f6; color: white; border: none; padding: 16px 32px; border-radius: 8px; font-size: 18px; font-weight: 600; cursor: pointer; flex: 1; }
+        .stop-button { background: #ef4444; color: white; border: none; padding: 16px 32px; border-radius: 8px; font-size: 18px; font-weight: 600; cursor: pointer; flex: 1; }
+        .button-group { display: flex; gap: 10px; margin-bottom: 20px; }
+        .transcript-box { background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; min-height: 120px; color: #e2e8f0; margin-bottom: 20px; font-size: 14px; line-height: 1.6; }
+        .question-title { font-size: 20px; font-weight: 600; color: #f1f5f9; margin-bottom: 30px; }
+        .progress-bar { height: 4px; background: #334155; border-radius: 2px; overflow: hidden; margin-bottom: 10px; }
+        .progress-fill { height: 100%; background: #3b82f6; transition: width 0.3s; }
+        .progress-text { font-size: 12px; color: #94a3b8; margin-bottom: 20px; }
+        .score-card { background: #0f172a; border: 2px solid #3b82f6; border-radius: 12px; padding: 30px; text-align: center; margin-bottom: 30px; }
+        .large-score { font-size: 72px; font-weight: bold; color: #3b82f6; margin: 20px 0; }
+        .category-scores { margin-bottom: 30px; }
+        .category-item { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; font-size: 14px; }
+        .category-label { min-width: 150px; color: #cbd5e1; }
+        .category-progress-bar { flex: 1; height: 8px; background: #334155; border-radius: 4px; overflow: hidden; }
+        .category-progress-fill { height: 100%; transition: width 0.3s; }
+        .category-score { min-width: 40px; text-align: right; font-weight: 600; color: #f1f5f9; }
+        .finish-prompt { background: #f59e0b; color: white; padding: 20px; border-radius: 8px; margin-top: 20px; }
+        .submit-button { background: #10b981; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 16px; cursor: pointer; margin-top: 10px; width: 100%; font-weight: 600; }
+        .continue-button { background: #64748b; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 16px; cursor: pointer; margin-top: 10px; width: 100%; }
+        .processing-text { color: #3b82f6; text-align: center; margin-top: 20px; font-size: 14px; }
     </style>
 </head>
 <body>
     <div id="root"></div>
-
-    <!-- React from CDN with umd build -->
-    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
-    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
     <script>
-        // Wait for React to be available
         function waitForReact() {
             if (typeof React === 'undefined' || typeof ReactDOM === 'undefined') {
                 setTimeout(waitForReact, 50);
                 return;
             }
-            
-            console.log('✅ React loaded successfully');
             initializeApp();
         }
 
-        // Constants
         const INTERVIEW_QUESTIONS = [
-            {
-                id: 1,
-                type: 'behavioral',
-                question: 'Tell me about a time when you had to work on a challenging project. What was the situation, and how did you approach it?',
-                category: 'Problem Solving'
-            },
-            {
-                id: 2,
-                type: 'technical',
-                question: 'Describe your experience with technical systems or tools you\'ve worked with. What was your role?',
-                category: 'Technical Knowledge'
-            },
-            {
-                id: 3,
-                type: 'behavioral',
-                question: 'Tell me about a time you had to collaborate with someone you found difficult. How did you handle it?',
-                category: 'Teamwork'
-            },
-            {
-                id: 4,
-                type: 'situational',
-                question: 'If you encountered a problem at work that you couldn\'t solve immediately, what would you do?',
-                category: 'Problem Solving'
-            },
-            {
-                id: 5,
-                type: 'behavioral',
-                question: 'Describe a time when you received critical feedback. How did you respond?',
-                category: 'Adaptability'
-            }
+            { id: 1, type: 'behavioral', question: 'Tell me about a time when you had to work on a challenging project. What was the situation, and how did you approach it?', category: 'Problem Solving' },
+            { id: 2, type: 'technical', question: 'Describe your experience with technical systems or tools you\'ve worked with. What was your role?', category: 'Technical Knowledge' },
+            { id: 3, type: 'behavioral', question: 'Tell me about a time you had to collaborate with someone you found difficult. How did you handle it?', category: 'Teamwork' },
+            { id: 4, type: 'situational', question: 'If you encountered a problem at work that you couldn\'t solve immediately, what would you do?', category: 'Problem Solving' },
+            { id: 5, type: 'behavioral', question: 'Describe a time when you received critical feedback. How did you respond?', category: 'Adaptability' }
         ];
 
         const FILLER_WORDS = ['um', 'uh', 'like', 'you know', 'actually', 'basically', 'so', 'well', 'right', 'okay', 'really', 'literally', 'honestly'];
 
-        // Speech Recognition Manager
         class SpeechRecognitionManager {
             constructor() {
                 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-                if (!SpeechRecognition) {
-                    throw new Error('Speech Recognition not supported');
-                }
+                if (!SpeechRecognition) throw new Error('Speech Recognition not supported');
                 this.recognition = new SpeechRecognition();
                 this.recognition.continuous = true;
                 this.recognition.interimResults = true;
                 this.recognition.lang = 'en-US';
-                this.isListening = false;
             }
 
             startListening(onResult, onEnd) {
-                this.isListening = true;
                 this.recognition.onresult = (event) => {
                     let transcript = '';
                     let interimTranscript = '';
-
                     for (let i = event.resultIndex; i < event.results.length; i++) {
                         const transcriptSegment = event.results[i][0].transcript;
                         if (event.results[i].isFinal) {
@@ -356,62 +85,38 @@
                             interimTranscript += transcriptSegment;
                         }
                     }
-
-                    if (onResult) {
-                        onResult(transcript.trim(), interimTranscript.trim());
-                    }
+                    if (onResult) onResult(transcript.trim(), interimTranscript.trim());
                 };
-
-                this.recognition.onend = () => {
-                    this.isListening = false;
-                    if (onEnd) onEnd();
-                };
-
+                this.recognition.onend = () => { if (onEnd) onEnd(); };
                 this.recognition.start();
             }
 
             stopListening() {
                 this.recognition.stop();
-                this.isListening = false;
             }
         }
 
-        // Answer Analyzer
         class AnswerAnalyzer {
             analyzeCommunication(transcript) {
                 const words = transcript.split(/\s+/).filter(w => w.length > 0);
                 const wordCount = words.length;
                 const estimatedMinutes = wordCount / 130;
                 const wordsPerMinute = estimatedMinutes > 0 ? Math.round(wordCount / estimatedMinutes) : 0;
-
                 let fillerCount = 0;
                 const lowerTranscript = transcript.toLowerCase();
                 FILLER_WORDS.forEach(word => {
                     const regex = new RegExp(`\\b${word}\\b`, 'g');
                     fillerCount += (lowerTranscript.match(regex) || []).length;
                 });
-
                 const vocabularyWords = new Set(words.map(w => w.toLowerCase()));
-                const vocabularyDiversity = (vocabularyWords.size / wordCount) * 100;
-
-                return {
-                    wordCount,
-                    wordsPerMinute,
-                    fillerWordCount: fillerCount,
-                    vocabularyDiversity: Math.min(100, vocabularyDiversity)
-                };
+                return { wordCount, wordsPerMinute, fillerWordCount: fillerCount, vocabularyDiversity: Math.min(100, (vocabularyWords.size / wordCount) * 100) };
             }
 
             analyzeContent(transcript) {
                 const completeness = Math.min(100, (transcript.split(/\s+/).length / 50) * 100);
                 const hasExamples = /example|specifically|for instance|such as/i.test(transcript);
                 const hasDetails = transcript.length > 200;
-                const specificity = (hasExamples ? 50 : 0) + (hasDetails ? 50 : 0);
-
-                return {
-                    completeness,
-                    specificity
-                };
+                return { completeness, specificity: (hasExamples ? 50 : 0) + (hasDetails ? 50 : 0) };
             }
 
             generateScore(communication, content) {
@@ -419,75 +124,37 @@
                 const contentScore = content.completeness * 0.6;
                 const baseScore = (commScore + contentScore) * 0.8;
                 const bonusScore = content.specificity * 0.2;
-
                 return Math.round(baseScore + bonusScore);
             }
         }
 
-        // Interview Engine
         class InterviewEngine {
-            constructor(questions) {
-                this.questions = questions;
-                this.currentIndex = 0;
-                this.answers = [];
-            }
-
-            getCurrentQuestion() {
-                return this.questions[this.currentIndex];
-            }
-
-            addAnswer(transcript) {
-                this.answers.push({ transcript });
-                this.currentIndex++;
-            }
-
-            isComplete() {
-                return this.currentIndex >= this.questions.length;
-            }
+            constructor(questions) { this.questions = questions; this.currentIndex = 0; this.answers = []; }
+            getCurrentQuestion() { return this.questions[this.currentIndex]; }
+            addAnswer(transcript) { this.answers.push({ transcript }); this.currentIndex++; }
+            isComplete() { return this.currentIndex >= this.questions.length; }
 
             getResults() {
                 const analyzer = new AnswerAnalyzer();
-                const results = {
-                    answers: [],
-                    overallScore: 0,
-                    categoryScores: {}
-                };
-
+                const results = { answers: [], overallScore: 0, categoryScores: {} };
                 this.answers.forEach((answer, index) => {
                     const question = this.questions[index];
                     const communication = analyzer.analyzeCommunication(answer.transcript);
                     const content = analyzer.analyzeContent(answer.transcript);
                     const score = analyzer.generateScore(communication, content);
-
-                    results.answers.push({
-                        question: question.question,
-                        transcript: answer.transcript,
-                        score,
-                        category: question.category
-                    });
+                    results.answers.push({ question: question.question, transcript: answer.transcript, score, category: question.category });
                 });
-
-                results.overallScore = Math.round(
-                    results.answers.reduce((sum, a) => sum + a.score, 0) / results.answers.length
-                );
-
-                Object.keys(INTERVIEW_QUESTIONS.reduce((acc, q) => {
-                    acc[q.category] = true;
-                    return acc;
-                }, {})).forEach(category => {
+                results.overallScore = Math.round(results.answers.reduce((sum, a) => sum + a.score, 0) / results.answers.length);
+                Object.keys(INTERVIEW_QUESTIONS.reduce((acc, q) => { acc[q.category] = true; return acc; }, {})).forEach(category => {
                     const categoryAnswers = results.answers.filter(a => a.category === category);
                     if (categoryAnswers.length > 0) {
-                        results.categoryScores[category] = Math.round(
-                            categoryAnswers.reduce((sum, a) => sum + a.score, 0) / categoryAnswers.length
-                        );
+                        results.categoryScores[category] = Math.round(categoryAnswers.reduce((sum, a) => sum + a.score, 0) / categoryAnswers.length);
                     }
                 });
-
                 return results;
             }
         }
 
-        // Main App Component
         function AIInterviewerApp() {
             const [stage, setStage] = React.useState('consent');
             const [engine] = React.useState(new InterviewEngine(INTERVIEW_QUESTIONS));
@@ -498,15 +165,12 @@
             const [showFinishPrompt, setShowFinishPrompt] = React.useState(false);
             const speechManagerRef = React.useRef(null);
 
-            const handleConsent = () => {
-                setStage('interview');
-            };
+            const handleConsent = () => setStage('interview');
 
             const startRecording = async () => {
                 try {
                     await navigator.mediaDevices.getUserMedia({ audio: true });
                     speechManagerRef.current = new SpeechRecognitionManager();
-                    
                     speechManagerRef.current.startListening(
                         (finalTranscript, interimTranscript) => {
                             setTranscript(finalTranscript + interimTranscript);
@@ -516,10 +180,9 @@
                         },
                         () => setIsRecording(false)
                     );
-                    
                     setIsRecording(true);
                 } catch (err) {
-                    alert('Microphone access denied. Please allow microphone permission.');
+                    alert('Microphone access denied');
                 }
             };
 
@@ -532,92 +195,67 @@
 
             const handleSubmit = () => {
                 if (!transcript.trim()) {
-                    alert('Please provide an answer before submitting.');
+                    alert('Please provide an answer');
                     return;
                 }
-
                 stopRecording();
                 setIsProcessing(true);
-
                 setTimeout(() => {
                     engine.addAnswer(transcript);
-                    
                     if (engine.isComplete()) {
                         setResults(engine.getResults());
                         setStage('results');
                     }
-                    
                     setTranscript('');
                     setShowFinishPrompt(false);
                     setIsProcessing(false);
                 }, 1000);
             };
 
-            const handleReset = () => {
-                window.location.reload();
-            };
+            const handleReset = () => window.location.reload();
 
             if (stage === 'consent') {
                 return React.createElement('div', { className: 'container' },
                     React.createElement('div', { className: 'card' },
                         React.createElement('h1', { className: 'title' }, '🎤 AI Interviewer'),
-                        React.createElement('p', { className: 'subtitle' }, 'Intelligent Interview Assessment Platform'),
+                        React.createElement('p', { className: 'subtitle' }, 'Intelligent Interview Assessment'),
                         React.createElement('div', null,
-                            React.createElement('h2', { className: 'section-title' }, 'Interview Consent'),
-                            React.createElement('p', { className: 'text' }, 'This interview platform uses speech recognition to evaluate your responses.'),
+                            React.createElement('h2', { className: 'section-title' }, 'Consent'),
+                            React.createElement('p', { className: 'text' }, 'This platform uses speech recognition to evaluate your answers.'),
                             React.createElement('ul', { className: 'list' },
-                                React.createElement('li', null, 'Communication clarity and pace'),
-                                React.createElement('li', null, 'Answer relevance and completeness'),
-                                React.createElement('li', null, 'Technical knowledge'),
-                                React.createElement('li', null, 'Problem-solving approach')
+                                React.createElement('li', null, 'Communication clarity'),
+                                React.createElement('li', null, 'Answer relevance'),
+                                React.createElement('li', null, 'Problem-solving skills')
                             ),
-                            React.createElement('h3', { className: 'section-title' }, 'Privacy & Data'),
-                            React.createElement('p', { className: 'text' }, '✅ Your audio is processed locally in your browser'),
-                            React.createElement('p', { className: 'text' }, '✅ No data is stored on external servers'),
-                            React.createElement('button', { 
-                                className: 'button',
-                                onClick: handleConsent
-                            }, 'Allow Microphone & Start Interview')
+                            React.createElement('button', { className: 'button', onClick: handleConsent }, 'Start Interview')
                         )
                     )
                 );
             }
 
             if (stage === 'results') {
-                const interpretation = results.overallScore >= 85 ? '✅ Exceptional' : 
-                                     results.overallScore >= 75 ? '✅ Strong' :
-                                     results.overallScore >= 60 ? '⚠️ Adequate' :
-                                     results.overallScore >= 45 ? '❌ Needs Improvement' :
-                                     '❌ Poor';
-
+                const interpretation = results.overallScore >= 85 ? '✅ Exceptional' : results.overallScore >= 75 ? '✅ Strong' : results.overallScore >= 60 ? '⚠️ Adequate' : '❌ Needs Work';
                 return React.createElement('div', { className: 'container' },
                     React.createElement('div', { className: 'card' },
-                        React.createElement('h1', { className: 'title' }, '📊 Interview Results'),
+                        React.createElement('h1', { className: 'title' }, '📊 Results'),
                         React.createElement('div', { className: 'score-card' },
-                            React.createElement('h2', { className: 'section-title' }, 'Overall Score'),
+                            React.createElement('h2', { className: 'section-title' }, 'Score'),
                             React.createElement('div', { className: 'large-score' }, results.overallScore),
-                            React.createElement('p', { className: 'score-interpretation' }, interpretation)
+                            React.createElement('p', null, interpretation)
                         ),
                         React.createElement('div', { className: 'category-scores' },
-                            React.createElement('h3', { className: 'section-title' }, 'Category Breakdown'),
-                            Object.entries(results.categoryScores).map(([category, score]) => {
+                            Object.entries(results.categoryScores).map(([cat, score]) => {
                                 const color = score >= 75 ? '#10b981' : score >= 60 ? '#f59e0b' : '#ef4444';
-                                return React.createElement('div', { key: category, className: 'category-item' },
-                                    React.createElement('span', { className: 'category-label' }, category),
+                                return React.createElement('div', { key: cat, className: 'category-item' },
+                                    React.createElement('span', { className: 'category-label' }, cat),
                                     React.createElement('div', { className: 'category-progress-bar' },
-                                        React.createElement('div', { 
-                                            className: 'category-progress-fill',
-                                            style: { width: score + '%', backgroundColor: color }
-                                        })
+                                        React.createElement('div', { className: 'category-progress-fill', style: { width: score + '%', backgroundColor: color } })
                                     ),
                                     React.createElement('span', { className: 'category-score' }, score)
                                 );
                             })
                         ),
-                        React.createElement('button', { 
-                            className: 'button',
-                            onClick: handleReset
-                        }, '🔄 Take Interview Again')
+                        React.createElement('button', { className: 'button', onClick: handleReset }, 'Try Again')
                     )
                 );
             }
@@ -628,68 +266,37 @@
             return React.createElement('div', { className: 'container' },
                 React.createElement('div', { className: 'card' },
                     React.createElement('div', { className: 'progress-bar' },
-                        React.createElement('div', { 
-                            className: 'progress-fill',
-                            style: { width: progressPercent + '%' }
-                        })
+                        React.createElement('div', { className: 'progress-fill', style: { width: progressPercent + '%' } })
                     ),
-                    React.createElement('p', { className: 'progress-text' }, 
-                        `Question ${engine.currentIndex + 1} of ${INTERVIEW_QUESTIONS.length}`
-                    ),
+                    React.createElement('p', { className: 'progress-text' }, `Question ${engine.currentIndex + 1}/${INTERVIEW_QUESTIONS.length}`),
                     React.createElement('h2', { className: 'question-title' }, currentQuestion.question),
-                    React.createElement('div', { className: 'transcript-box' }, 
-                        transcript || '(Your transcript will appear here...)'
-                    ),
+                    React.createElement('div', { className: 'transcript-box' }, transcript || '(Awaiting speech...)'),
                     React.createElement('div', { className: 'button-group' },
                         isRecording ? 
-                            React.createElement('button', { 
-                                className: 'stop-button',
-                                onClick: stopRecording,
-                                disabled: isProcessing
-                            }, '⏹️ Stop Recording') :
-                            React.createElement('button', { 
-                                className: 'record-button',
-                                onClick: startRecording,
-                                disabled: isProcessing
-                            }, '🎤 Start Recording')
+                            React.createElement('button', { className: 'stop-button', onClick: stopRecording, disabled: isProcessing }, '⏹️ Stop') :
+                            React.createElement('button', { className: 'record-button', onClick: startRecording, disabled: isProcessing }, '🎤 Record')
                     ),
                     showFinishPrompt && React.createElement('div', { className: 'finish-prompt' },
-                        React.createElement('p', null, 'Ready to submit your answer?'),
-                        React.createElement('button', { 
-                            className: 'submit-button',
-                            onClick: handleSubmit
-                        }, '✅ Submit Answer'),
-                        React.createElement('button', { 
-                            className: 'continue-button',
-                            onClick: () => setShowFinishPrompt(false)
-                        }, '📝 Continue Speaking')
+                        React.createElement('p', null, 'Ready to submit?'),
+                        React.createElement('button', { className: 'submit-button', onClick: handleSubmit }, 'Submit'),
+                        React.createElement('button', { className: 'continue-button', onClick: () => setShowFinishPrompt(false) }, 'Continue')
                     ),
-                    isProcessing && React.createElement('p', { className: 'processing-text' }, '⏳ Processing your answer...')
+                    isProcessing && React.createElement('p', { className: 'processing-text' }, 'Processing...')
                 )
             );
         }
 
-        // Initialize app
         function initializeApp() {
             try {
                 const root = ReactDOM.createRoot(document.getElementById('root'));
                 root.render(React.createElement(AIInterviewerApp));
-                console.log('✅ AI Interviewer started successfully');
+                console.log('✅ App loaded');
             } catch (error) {
                 console.error('Error:', error);
-                document.getElementById('root').innerHTML = `
-                    <div class="container" style="color: #ef4444;">
-                        <div class="card">
-                            <h2>⚠️ Error</h2>
-                            <p>${error.message}</p>
-                            <p>Please refresh the page or try a different browser.</p>
-                        </div>
-                    </div>
-                `;
+                document.getElementById('root').innerHTML = '<div style="color:red;padding:40px;">Error: ' + error.message + '</div>';
             }
         }
 
-        // Start when page loads
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', waitForReact);
         } else {
